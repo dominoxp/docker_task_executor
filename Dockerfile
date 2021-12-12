@@ -15,7 +15,7 @@ USER docker
 COPY . /app
 RUN pip install -r /app/requirements.txt --no-warn-script-location
 
-PORT
+EXPOSE 8080
 VOLUME /config
 WORKDIR /app
 
