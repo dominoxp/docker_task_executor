@@ -31,11 +31,11 @@ class DockerComposeExecutor(Executor):
             build = task_config.get_bool("build", True)
 
             if pull:
-                cmd = "docker-compose pull"
+                cmd = "docker compose pull"
                 output = subprocess.check_output(cmd, shell=True, cwd=docker_compose_folder)
                 self.logger.debug(f"Command output: {output}")
 
-            cmd = "docker-compose up --quiet-pull --no-color -d"
+            cmd = "docker compose up --quiet-pull --no-color -d"
 
             if force_recreate:
                 cmd += " --force-recreate"
