@@ -24,7 +24,7 @@ class DockerExecutor(Executor):
             command += f"-H {socket}"
 
         if action == "login":
-            command += f"login -u \"{task_config.get_string('username')}\" -p \"{task_config.get_string('password')}\" \"{task_config.get_string('socket')}\""
+            command += f" login -u \"{task_config.get_string('username')}\" -p \"{task_config.get_string('password')}\" \"{task_config.get_string('socket')}\""
 
         elif action == "custom":
             command += f" {task_config.get_string('cmd', '-v')}"
