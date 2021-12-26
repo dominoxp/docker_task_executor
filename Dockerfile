@@ -17,7 +17,10 @@ RUN apt-get update && apt-get install ca-certificates curl gnupg lsb-release -y 
     mkdir -p /usr/local/lib/docker/cli-plugins && \
     curl -SL https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose && \
     chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
-RUN useradd -ms /bin/bash docker
+
+ARG uid=998
+ARG gid=998
+RUN groupadd -g ${gid} docker && useradd -u ${uid} -g ${gid} -m -s /bin/bash docker
 USER docker
 
 COPY . /app
