@@ -22,17 +22,15 @@ class Executor:
         pass
 
     async def execute_executor(self, task: Task, optional_parameters: dict):
-        task_helper = ConfigHelper(task.name, task.parameters)
-
         for key, typ in self.required_config.items():
-            if not task_helper.key_exists(key):
+            if key not in task.parameters:
                 self.logger.error(
                     f"Executor {self.name} cannot proceed because required config option {key} is missing")
                 raise ValueError(f"Executor {self.name} cannot proceed because required config option {key} is missing")
 
-            if typ != task_helper.value_type(key):
+            if not isinstance(task.parameters[key], typ):
                 self.logger.error(
-                    f"Executor {self.name} cannot proceed because required config option type mismatches, expected {typ}, got {self.config.value_type(key)} instead")
+                    f"Executor {self.name} cannot proceed because required config option type mismatches, expected {typ}, got {str(type(task.parameters[key]))} instead")
                 raise ValueError(f"Executor {self.name} cannot proceed because config option typ mismatch")
 
         await self.execute(task, optional_parameters)
